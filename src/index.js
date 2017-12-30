@@ -1,9 +1,8 @@
 const api = require('binance')
-const { curry, includes, flatMap, map, first, last } = require('lodash')
+const { curry, includes, flatMap } = require('lodash')
 const { getEthPrice, getBtcPrice } = require('./coinbase')
-require('dotenv').config()
-
 const { fork } = require('./util')
+require('dotenv').config()
 
 const binance = new api.BinanceRest({
   key: process.env.KEY,

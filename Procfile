@@ -1,1 +1,1 @@
-worker: node dist/build.js
+worker: node src/index.js
