@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": [
+        2,
+        {
+          "singleQuote": true,
+          "printWidth": 90,
+          "semi": false
+        }
+      ]
+  }
+}
