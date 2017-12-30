@@ -1,1 +1,1 @@
-worker: node build.js
+worker: node bundle.js
