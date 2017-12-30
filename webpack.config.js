@@ -3,11 +3,13 @@ const path = require('path')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
 
 const config = {
-  entry: './index.js',
+  entry: {
+    app: './src/index.js'
+  },
   target: 'node',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname)
+    filename: 'build.js',
+    path: path.resolve(__dirname, 'dist')
   }
 }
 
