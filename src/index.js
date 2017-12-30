@@ -1,9 +1,9 @@
-import api from 'binance'
-import { curry, includes, flatMap, map, first, last } from 'lodash'
-import { getEthPrice, getBtcPrice } from './coinbase'
+const api = require('binance')
+const { curry, includes, flatMap, map, first, last } = require('lodash')
+const { getEthPrice, getBtcPrice } = require('./coinbase')
 require('dotenv').config()
 
-import { fork } from './util'
+const { fork } = require('./util')
 
 const binance = new api.BinanceRest({
   key: process.env.KEY,
@@ -15,22 +15,17 @@ const FILLED = 'FILLED'
 
 let ethPrice
 let btcPrice
-const getBasePrices = () =>
-  Promise.all([getBtcPrice(), getEthPrice()])
-    .then(tokens => tokens.map(JSON.parse))
-    .then(parsed => {
-      btcPrice = parseFloat(first(parsed).data.amount)
-      ethPrice = parseFloat(last(parsed).data.amount)
-    })
+const getBasePrices = async () => {
+  btcPrice = await getBtcPrice()
+  ethPrice = await getEthPrice()
+}
 
-const getSymbols = () =>
-  binance
-    .account()
-    .then(({ balances }) =>
-      balances
-        .filter(({ asset, free }) => parseFloat(free) > 0)
-        .map(({ asset: symbol, free: quantity }) => ({ symbol, quantity }))
-    )
+const getSymbols = async () => {
+  const { balances } = await binance.account()
+  return balances
+    .filter(({ asset, free }) => parseFloat(free) > 0)
+    .map(({ asset: symbol, free: quantity }) => ({ symbol, quantity }))
+}
 
 const getEthHistory = symbol => binance.myTrades(`${symbol}ETH`)
 const getBtcHistory = symbol => binance.myTrades(`${symbol}BTC`)
